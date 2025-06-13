@@ -1,0 +1,112 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 60 56% 91%; /* #F5F5DC soft beige */
+    --foreground: 145 70% 18%; /* dark emerald for text */
+
+    --card: 60 50% 96%; /* slightly whiter beige for cards */
+    --card-foreground: 145 70% 18%;
+
+    --popover: 60 50% 96%;
+    --popover-foreground: 145 70% 18%;
+
+    --primary: 145 58% 55%; /* #50C878 emerald green */
+    --primary-foreground: 145 20% 98%; /* very light for text on primary */
+
+    --secondary: 145 50% 75%; /* lighter emerald for secondary elements */
+    --secondary-foreground: 145 60% 25%; /* dark green text on secondary */
+
+    --muted: 60 40% 85%; /* muted beige */
+    --muted-foreground: 60 30% 40%; /* muted text */
+
+    --accent: 51 100% 50%; /* #FFD700 golden yellow */
+    --accent-foreground: 51 100% 10%; /* very dark text on accent */
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 145 30% 80%; /* subtle emerald-tinted border */
+    --input: 60 50% 98%; /* very light beige for input background */
+    --ring: 145 58% 55%; /* emerald green for focus rings */
+
+    --radius: 0.75rem;
+
+    --chart-1: 145 58% 55%;
+    --chart-2: 51 100% 50%;
+    --chart-3: 145 40% 65%;
+    --chart-4: 51 80% 60%;
+    --chart-5: 145 30% 75%;
+
+    --sidebar-background: 60 56% 88%; /* Slightly darker beige for sidebar */
+    --sidebar-foreground: 145 70% 15%;
+    --sidebar-primary: 145 58% 55%;
+    --sidebar-primary-foreground: 145 20% 98%;
+    --sidebar-accent: 51 100% 50%;
+    --sidebar-accent-foreground: 51 100% 10%;
+    --sidebar-border: 145 30% 75%;
+    --sidebar-ring: 145 58% 55%;
+  }
+
+  .dark {
+    /* For dark mode, we can invert or use a different palette if specified.
+       Keeping it similar to the default shadcn dark theme but adjusting with primary/accent. */
+    --background: 145 15% 10%; /* Dark emerald base */
+    --foreground: 60 30% 90%; /* Light beige text */
+
+    --card: 145 15% 15%;
+    --card-foreground: 60 30% 90%;
+
+    --popover: 145 15% 15%;
+    --popover-foreground: 60 30% 90%;
+
+    --primary: 145 58% 55%; /* Emerald green */
+    --primary-foreground: 145 70% 18%; /* Dark text on emerald */
+
+    --secondary: 145 40% 30%;
+    --secondary-foreground: 60 30% 90%;
+
+    --muted: 145 15% 20%;
+    --muted-foreground: 60 30% 60%;
+
+    --accent: 51 100% 50%; /* Golden yellow */
+    --accent-foreground: 51 100% 10%; /* Dark text on yellow */
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 145 20% 25%;
+    --input: 145 15% 20%;
+    --ring: 145 58% 65%;
+
+    --chart-1: 145 58% 55%;
+    --chart-2: 51 100% 50%;
+    --chart-3: 145 40% 45%;
+    --chart-4: 51 80% 40%;
+    --chart-5: 145 30% 35%;
+
+    --sidebar-background: 145 15% 12%;
+    --sidebar-foreground: 60 30% 88%;
+    --sidebar-primary: 145 58% 55%;
+    --sidebar-primary-foreground: 145 70% 18%;
+    --sidebar-accent: 51 100% 50%;
+    --sidebar-accent-foreground: 51 100% 10%;
+    --sidebar-border: 145 20% 22%;
+    --sidebar-ring: 145 58% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    @apply font-body;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-headline;
+  }
+}
