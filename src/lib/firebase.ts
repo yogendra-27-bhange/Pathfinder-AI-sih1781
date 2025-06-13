@@ -1,17 +1,15 @@
-
 // src/lib/firebase.ts
 import { initializeApp, getApps, type FirebaseApp } from "firebase/app";
 import { getFirestore, type Firestore } from "firebase/firestore";
 
-// TODO: Replace with your actual Firebase project configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDnYGEB5h0CY8ynqYbw__MsSlYJZ28aol0",
-  authDomain: "pathfinder-ai-3e599.firebaseapp.com",
-  projectId: "pathfinder-ai-3e599",
-  storageBucket: "pathfinder-ai-3e599.firebasestorage.app",
-  messagingSenderId: "333637923034",
-  appId: "1:333637923034:web:95ff3b6eea5ed0965635e3",
-  measurementId: "G-STM2L8PF1G"
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
 let app: FirebaseApp;
