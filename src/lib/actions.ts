@@ -36,6 +36,13 @@ export async function handleStudentProfileAnalysis(
       return { success: false, error: error.errors.map(e => `${e.path.join('.')}: ${e.message}`).join(', ') };
     }
     console.error("Error in AI profile analysis:", error);
-    return { success: false, error: "An unexpected error occurred during analysis. Please try again." };
+    // Return the actual error message if available, for debugging
+    let errorMessage = "An unexpected error occurred during analysis. Please try again.";
+    if (error instanceof Error && error.message) {
+      errorMessage = error.message;
+    } else if (typeof error === 'string') {
+      errorMessage = error;
+    }
+    return { success: false, error: errorMessage };
   }
 }
