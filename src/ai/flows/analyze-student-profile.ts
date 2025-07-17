@@ -45,7 +45,7 @@ const AnalyzeStudentProfileOutputSchema = z.object({
           .array(
             z.object({
               skill: z.string().describe('The skill.'),
-              yourLevel: z.string().describe('The student’s current level in the skill (e.g., Beginner, Intermediate, Advanced).'),
+              yourLevel: z.enum(['Beginner', 'Intermediate', 'Advanced']).describe('The student’s current level in the skill.'),
               recommendedCourses: z.array(
                 z.object({
                   title: z.string().describe('The title of the recommended course.'),
@@ -99,7 +99,7 @@ const analyzeStudentProfileFlow = ai.defineFlow(
     inputSchema: AnalyzeStudentProfileInputSchema,
     outputSchema: AnalyzeStudentProfileOutputSchema,
   },
-  async input => {
+  async (input: AnalyzeStudentProfileInput) => {
     const {output} = await analyzeProfilePrompt(input);
     return output!;
   }
