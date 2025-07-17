@@ -28,8 +28,8 @@ const interestsList = [
 const profileFormSchema = z.object({
   resume: z.custom<FileList>().refine(files => files && files.length > 0, "Resume is required."),
   tenthPercentage: z.coerce.number().min(0, "Min 0").max(100, "Max 100").positive("Must be positive"),
-  twelfthPercentage: z.coerce.number().min(0).max(100).positive("Must be positive"),
-  diplomaUgPercentage: z.coerce.number().min(0).max(100).positive("Must be positive"),
+  twelfthPercentage: z.coerce.number().min(0).max(100).positive("Must be positive").optional(),
+  diplomaUgPercentage: z.coerce.number().min(0).max(100).positive("Must be positive").optional(),
   interests: z.array(z.string()).refine((value) => value.some((item) => item), {
     message: "You have to select at least one interest.",
   }),
@@ -156,7 +156,7 @@ export default function ProfileForm({ onAnalysisStart, onAnalysisSuccess, onAnal
             name="twelfthPercentage"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>12th Grade Percentage (%)</FormLabel>
+                <FormLabel>12th Grade Percentage (%) (optional)</FormLabel>
                 <FormControl>
                   <Input type="number" placeholder="e.g., 80" {...field} />
                 </FormControl>
@@ -169,7 +169,7 @@ export default function ProfileForm({ onAnalysisStart, onAnalysisSuccess, onAnal
             name="diplomaUgPercentage"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Diploma/UG Percentage (%)</FormLabel>
+                <FormLabel>Diploma/UG Percentage (%) (optional)</FormLabel>
                 <FormControl>
                   <Input type="number" placeholder="e.g., 75" {...field} />
                 </FormControl>

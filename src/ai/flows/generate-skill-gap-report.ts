@@ -43,14 +43,11 @@ const GenerateSkillGapReportInputSchema = z.object({
 export type GenerateSkillGapReportInput = z.infer<typeof GenerateSkillGapReportInputSchema>;
 
 const GenerateSkillGapReportOutputSchema = z.object({
-  skillGapReport: z.array(
-    z.object({
-      careerPath: z.string().describe('The career path for which the skill gap is reported.'),
-      skill: SkillSchema.describe('The skill gap information.'),
-    })
-  ).describe('A list of skill gaps for each suggested career path.'),
+  skillGapReport: z.any().describe('Flexible output for skill gap report.'),
 });
-export type GenerateSkillGapReportOutput = z.infer<typeof GenerateSkillGapReportOutputSchema>;
+export type GenerateSkillGapReportOutput = {
+  skillGapReport: any;
+};
 
 export async function generateSkillGapReport(input: GenerateSkillGapReportInput): Promise<GenerateSkillGapReportOutput> {
   return generateSkillGapReportFlow(input);
@@ -59,7 +56,7 @@ export async function generateSkillGapReport(input: GenerateSkillGapReportInput)
 const prompt = ai.definePrompt({
   name: 'generateSkillGapReportPrompt',
   input: {schema: GenerateSkillGapReportInputSchema},
-  output: {schema: GenerateSkillGapReportOutputSchema},
+  // Removed output schema to allow free-form output
   prompt: `You are an expert career counselor. You will analyze the student's profile and suggested career paths to generate a skill gap report.
 
 Student Profile:
@@ -80,18 +77,18 @@ Based on this information, create a skill gap report that highlights the require
 
 Ensure that your skill gap report contains realistic and attainable skills, levels, and courses.
 
-Output the data in the JSON format.  Do not include any conversational text, only JSON.
-`, 
+Output the data in the JSON format.  Do not include any conversational text, only JSON.`, 
 });
 
 const generateSkillGapReportFlow = ai.defineFlow(
   {
     name: 'generateSkillGapReportFlow',
     inputSchema: GenerateSkillGapReportInputSchema,
-    outputSchema: GenerateSkillGapReportOutputSchema,
+    // Removed outputSchema to allow free-form output
   },
   async input => {
     const {output} = await prompt(input);
-    return output!;
+    // Optionally parse/validate output here if needed
+    return { skillGapReport: output };
   }
 );

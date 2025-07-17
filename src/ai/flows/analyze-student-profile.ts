@@ -36,31 +36,12 @@ const AnalyzeStudentProfileInputSchema = z.object({
 export type AnalyzeStudentProfileInput = z.infer<typeof AnalyzeStudentProfileInputSchema>;
 
 const AnalyzeStudentProfileOutputSchema = z.object({
-  suggestedCareerPaths: z
-    .array(
-      z.object({
-        careerPath: z.string().describe('The suggested career path.'),
-        requiredSkills: z.array(z.string()).describe('The core required skills for this path.'),
-        skillGapReport: z
-          .array(
-            z.object({
-              skill: z.string().describe('The skill.'),
-              yourLevel: z.enum(['Beginner', 'Intermediate', 'Advanced']).describe('The student’s current level in the skill.'),
-              recommendedCourses: z.array(
-                z.object({
-                  title: z.string().describe('The title of the recommended course.'),
-                  link: z.string().url().describe('A direct URL to the course, preferably from Coursera or YouTube.'),
-                })
-              ).describe('Recommended courses (title and link) to improve the skill. Prioritize Coursera and YouTube if possible.'),
-            })
-          )
-          .describe('A report of skill gaps and recommended courses.'),
-      })
-    )
-    .describe('A list of suggested career paths with required skills and skill gap reports.'),
+  suggestedCareerPaths: z.any().describe('Flexible output for suggested career paths.'),
 });
 
-export type AnalyzeStudentProfileOutput = z.infer<typeof AnalyzeStudentProfileOutputSchema>;
+export type AnalyzeStudentProfileOutput = {
+  suggestedCareerPaths: any;
+};
 
 export async function analyzeStudentProfile(
   input: AnalyzeStudentProfileInput
@@ -71,7 +52,7 @@ export async function analyzeStudentProfile(
 const analyzeProfilePrompt = ai.definePrompt({
   name: 'analyzeProfilePrompt',
   input: {schema: AnalyzeStudentProfileInputSchema},
-  output: {schema: AnalyzeStudentProfileOutputSchema},
+  // Removed output schema to allow free-form output
   prompt: `You are a career guidance expert. Analyze the student's profile, resume, and interests to suggest suitable career paths.
 
 Consider the student's academic details:
@@ -89,19 +70,19 @@ For each career path:
 2. Provide a skill gap report including the student's current level (Beginner, Intermediate, Advanced) for each relevant skill.
 3. For each skill in the gap report, recommend specific courses to bridge the gap. Each course recommendation MUST include a 'title' and a 'link' (a direct URL). Prioritize courses from reputable platforms like Coursera or YouTube. Ensure the links are valid.
 
-Format your output as a JSON object matching the AnalyzeStudentProfileOutputSchema schema.
-`,
+Format your output as a JSON object. Do not include any conversational text, only JSON.`,
 });
 
 const analyzeStudentProfileFlow = ai.defineFlow(
   {
     name: 'analyzeStudentProfileFlow',
     inputSchema: AnalyzeStudentProfileInputSchema,
-    outputSchema: AnalyzeStudentProfileOutputSchema,
+    // Removed outputSchema to allow free-form output
   },
   async (input: AnalyzeStudentProfileInput) => {
     const {output} = await analyzeProfilePrompt(input);
-    return output!;
+    // Optionally parse/validate output here if needed
+    return { suggestedCareerPaths: output };
   }
 );
 
